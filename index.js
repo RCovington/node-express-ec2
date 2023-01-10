@@ -23,7 +23,7 @@ app.get('/*', (req, res) => {
     console.log("RUSS Req path was: " + JSON.stringify(req.path));
     if(req.body)
     {
-       console.log("RUSS Req body was: " + JSON.stringify(req.body));
+       console.log("RUSS Req body was: <nothing>" );//+ JSON.stringify(req.body));
     }
     res.json('My get/*STAR* API running ...');
 });
