@@ -2,6 +2,8 @@ import express from 'express'
 
 const app = express();
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.listen(5001, () => console.log('API running on 5001'));
 
 app.get('/', (req, res) => {
@@ -20,7 +22,7 @@ app.get("/favicon.ico", function(req, res) {
 });
 
 app.get('/*', (req, res) => {
-    console.log("RUSS Req path was: " + JSON.stringify(req.path));
+    console.log("RUSS GET Req path was: " + JSON.stringify(req.path));
     if(req.body)
     {
        console.log("RUSS Req body was: <nothing>" );//+ JSON.stringify(req.body));
@@ -28,4 +30,10 @@ app.get('/*', (req, res) => {
     res.json('My get/*STAR* API running ...');
 });
 
+app.post('/*', (req, res) => {
+    console.log("RUSS POST Req path was: " + JSON.stringify(req.path));
+//    if(req.body)
+       console.log("RUSS Req body was: " + JSON.stringify(req.body));
+    res.json('My POST /*STAR* API running ...');
+});
 
