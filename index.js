@@ -20,8 +20,9 @@ app.get("/favicon.ico", function(req, res) {
 });
 
 app.get('/*', (req, res) => {
-    console.log("RUSS Req was: " + JSON.stringify(req.path));
-    res.json('My *STAR* API running ...');
+    console.log("RUSS Req path was: " + JSON.stringify(req.path));
+    console.log("RUSS Req body was: " + JSON.stringify(req.body));
+    res.json('My get/*STAR* API running ...');
 });
 
 
