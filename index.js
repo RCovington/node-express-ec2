@@ -2,7 +2,7 @@ import express from 'express'
 
 const app = express();
 
-app.listen(443, () => console.log('API running on 443'));
+app.listen(5001, () => console.log('API running on 5001'));
 
 app.get('/', (req, res) => {
     console.log("RUSS Req was: " + JSON.stringify(req.path));
