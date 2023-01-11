@@ -32,8 +32,10 @@ app.get('/*', (req, res) => {
 
 app.post('/*', (req, res) => {
     console.log("RUSS POST Req path was: " + JSON.stringify(req.path));
-//    if(req.body)
        console.log("RUSS Req body was: " + JSON.stringify(req.body));
+       console.log("RUSS here's the req.header: " + JSON.stringify(req.header));
+       console.log("RUSS here's the req.headers: " + JSON.stringify(req.headers));
+       console.log("RUSS here's the req.cookies: " + JSON.stringify(req.cookies));
     res.json('My POST /*STAR* API running ...');
 });
 
