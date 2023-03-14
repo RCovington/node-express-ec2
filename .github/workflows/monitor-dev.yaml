@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: REST API with curl
       run: |
-        curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"Your message here\"}" https://hooks.slack.com/workflows/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
+        curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"Your message here\"}" ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
     # Runs a single command using the runners shell
 #    - name: Webhook
 #      uses: distributhor/workflow-webhook
