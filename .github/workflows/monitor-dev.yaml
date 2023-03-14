@@ -3,32 +3,46 @@ name: API Monitor on Dev
 on: workflow_dispatch
 
 jobs:
-  build:
-    name: Setup preview environment
-    runs-on: [self-hosted, linux, licensing, dev]
-    env:
-      PR_ID: pr-${{ github.event.number }}
-      BUILD_TAG: pr-${{ github.event.pull_request.head.sha }}
-      APP_NAME: ls-licensing
+  test_commentary:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Slack Notification
-      id: slack
-      uses: slackapi/slack-github-action@v1.23.0
+    # Runs a single command using the runners shell
+    - name: Webhook
+      uses: distributhor/workflow-webhook
       with:
-        # For posting a rich message using Block Kit
-        payload: |
-          {
-            "text": "GitHub Action build result: ${{ job.status }}\nRUSS",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "GitHub Action build result: ${{ job.status }}\nRUSS"
-                }
-              }
-            ]
-          }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        url: ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
+        json: '{ \"message\":\"RUSS Your message here\" }'
+
+#jobs:
+#  build:
+#    name: Send a webhook maybe
+#    runs-on: [self-hosted, linux, licensing, dev]
+#    env:
+#      PR_ID: pr-${{ github.event.number }}
+#      BUILD_TAG: pr-${{ github.event.pull_request.head.sha }}
+#      APP_NAME: ls-licensing
+#    steps:
+#    - name: Slack Notification
+#      id: slack
+#      uses: slackapi/slack-github-action@v1.23.0
+#      with:
+#        # For posting a rich message using Block Kit
+#        payload: |
+#          {
+#            "text": "GitHub Action build result: ${{ job.status }}\nRUSS",
+#            "blocks": [
+#              {
+#                "type": "section",
+#                "text": {
+#                  "type": "mrkdwn",
+#                  "text": "GitHub Action build result: ${{ job.status }}\nRUSS"
+#                }
+#              }
+#            ]
+#          }
+#      env:
+#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
+#        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
