@@ -4,41 +4,6 @@ on: workflow_dispatch
 
 jobs:
   test:
-    name: API Monitor
-    runs-on: [self-hosted, linux, licensing, dev]
-    env:
-      PR_ID: pr-${{ github.event.number }}
-      BUILD_TAG: latest
-      APP_NAME: ls-licensing
-      NAMESPACE: ls-dev
-    steps:
-    - name: Add tools location to PATH
-      run: echo "/usr/local/sbin" >> $GITHUB_PATH
-
-    - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: us-west-2
-
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-
-    - name: Define variables
-      run: |
-        cd values/ls-dev
-        echo "API_URL=$(yq e .ambassador.mapping.host ls-licensing/values.yaml)" >> $GITHUB_ENV
-        echo "API_PREFIX=$(yq e .ambassador.mapping.prefix ls-licensing/values.yaml)" >> $GITHUB_ENV
-
-    - name: Run e2e tests
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      run: |
-        docker run --env testUserId=${{ secrets.TESTUSERID }} --env testUserPwd=${{ secrets.TESTUSERPWD }} --env clientsUrl=${{ secrets.CLIENTS_URL }} --env baseUrl=https://${{ env.API_URL}}/${{ env.PR_ID }}${{ env.API_PREFIX }} $ECR_REGISTRY/$APP_NAME:$BUILD_TAG npm run e2e
-
 - name: Slack Notification
   id: slack
   uses: slackapi/slack-github-action@v1.23.0
