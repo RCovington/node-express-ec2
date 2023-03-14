@@ -3,24 +3,32 @@ name: API Monitor on Dev
 on: workflow_dispatch
 
 jobs:
-- name: Slack Notification
-  id: slack
-  uses: slackapi/slack-github-action@v1.23.0
-  with:
-    # For posting a rich message using Block Kit
-    payload: |
-      {
-        "text": "GitHub Action build result: ${{ job.status }}\nRUSS",
-        "blocks": [
+  build:
+    name: Setup preview environment
+    runs-on: [self-hosted, linux, licensing, dev]
+    env:
+      PR_ID: pr-${{ github.event.number }}
+      BUILD_TAG: pr-${{ github.event.pull_request.head.sha }}
+      APP_NAME: ls-licensing
+    steps:
+    - name: Slack Notification
+      id: slack
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        # For posting a rich message using Block Kit
+        payload: |
           {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "GitHub Action build result: ${{ job.status }}\nRUSS"
-            }
+            "text": "GitHub Action build result: ${{ job.status }}\nRUSS",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "GitHub Action build result: ${{ job.status }}\nRUSS"
+                }
+              }
+            ]
           }
-        ]
-      }
-  env:
-    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
-    SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
