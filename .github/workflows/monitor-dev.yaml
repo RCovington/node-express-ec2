@@ -6,6 +6,7 @@ on:
     branches:
       - 'main'
       - 'LSSP-241'
+      - 'RC-001'
 jobs:
   send-curl:
     # The type of runner that the job will run on
@@ -15,7 +16,7 @@ jobs:
     steps:
     - name: REST API with curl
       run: |
-        curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"RUSS SOMETHING WAS PUSHED TO MAIN\", \"text\":\"RUSS Your text here\"}" ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
+        curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"RUSS SOMETHING WAS PUSHED TO RC-001\", \"text\":\"RUSS Your text here\"}" ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
     # Runs a single command using the runners shell
 #    - name: Webhook
 #      uses: distributhor/workflow-webhook
