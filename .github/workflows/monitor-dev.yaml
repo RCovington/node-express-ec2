@@ -17,19 +17,19 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-    # - name: Step is going to pass
-    #   run: echo Passing step
+    - name: Step is going to pass
+      run: echo Passing step
       
-    # - name: Step is going to fail
-    #   run: exit 1
+    - name: Step is going to fail
+      run: exit 1
 
     - name: Report Failure to Slack
-      # if: ${{ failure() }}
+      if: ${{ failure() }}
       run: |
         curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"RUSS it FAILED-- ${{ steps.send-curl.logs }} !  the BUILD_TAG-- ${{ env.BUILD_TAG }} !  the APP_NAME-- ${{ env.APP_NAME }} !  \", \"text\":\"RUSS Your text here\"}" ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
     - name: Report Success to Slack
-      # if: ${{ success() }}
+      if: ${{ success() }}
       run: |
         curl -X POST -H "Content-Type: application/json" -d "{\"message\":\"RUSS it SUCCEEDED-- ${{ steps.send-curl.logs }} !  the BUILD_TAG-- ${{ env.BUILD_TAG }} !  the APP_NAME-- ${{ env.APP_NAME }} !  \", \"text\":\"RUSS Your text here\"}" ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
