@@ -20,8 +20,8 @@ jobs:
     - name: Step is going to pass
       run: echo Passing step
       
-    - name: Step is going to fail
-      run: exit 1
+    # - name: Step is going to fail
+    #   run: exit 1
 
     - name: Report Failure to Slack
       if: ${{ failure() }}
