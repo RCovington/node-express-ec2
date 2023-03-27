@@ -23,7 +23,7 @@ jobs:
     - name: Step is going to fail
       id: e2e-test
       # continue-on-error: true
-      run: exit 1 
+      run: echo "ls /l" >> $GITHUB_OUTPUT 
 
 
     - name: Report Failure to Slack
@@ -31,7 +31,7 @@ jobs:
       run: >
         curl -X POST
         -H "Content-Type: application/json"
-        -d "{\"message\":\"The monitor FAILED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ steps.e2e-test.outputs.stdout }}\"}"
+        -d "{\"message\":\"The monitor FAILED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ join(steps.e2e-test.outputs.*, '\n') }}\"}"
         ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
     - name: Report Success to Slack
@@ -39,7 +39,7 @@ jobs:
       run: >
         curl -X POST
         -H "Content-Type: application/json"
-        -d "{\"message\":\"The monitor SUCCEEDED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ github.event_name }}\"}"
+        -d "{\"message\":\"The monitor SUCCEEDED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ join(steps.e2e-test.outputs.*, '\n') }}\"}"
         ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
     # steps:
