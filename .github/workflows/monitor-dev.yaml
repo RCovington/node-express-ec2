@@ -22,7 +22,7 @@ jobs:
       
     - name: Step is going to fail
       # continue-on-error: true
-      run: exit 1
+      run: exit 1 
 
     - name: Report Failure to Slack
       if: ${{ failure() }}
