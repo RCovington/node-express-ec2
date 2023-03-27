@@ -34,7 +34,7 @@ jobs:
       run: >
         curl -X POST
         -H "Content-Type: application/json"
-        -d "{\"message\":\"The monitor SUCCEEDED: ${{steps.e2e-test.logs.stdout}}  !  the env.API_URL: ${{ env.API_URL }} !  the ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} !  \", \"text\":\"RUSS Your text here\"}"
+        -d "{\"message\":\"The monitor SUCCEEDED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ github.event_name }}\"}"
         ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
     # steps:
