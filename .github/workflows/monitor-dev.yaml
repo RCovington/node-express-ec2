@@ -24,7 +24,7 @@ jobs:
       id: e2e-test
       # continue-on-error: true
       run: |
-        echo "something=nothing" >> $GITHUB_OUTPUT 
+        echo "something=${{ ls }}" >> $GITHUB_OUTPUT 
         echo ${{ steps.e2e-test.outputs.something }}
 
 
