@@ -31,7 +31,7 @@ jobs:
       run: >
         curl -X POST
         -H "Content-Type: application/json"
-        -d "{\"message\":\"The monitor FAILED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ github.event.repository.name }}\"}"
+        -d "{\"message\":\"The monitor FAILED: ${{steps.e2e-test.logs.stdout}}  !  the Event: ${{ github.event_name }} !  \", \"text\":\"the Event: ${{ steps.e2e-test.outputs }}\"}"
         ${{ secrets.SLACK_MONITOR_WEBHOOK_URL }}
 
     - name: Report Success to Slack
